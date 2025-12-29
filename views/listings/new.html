@@ -1,0 +1,136 @@
+{% extends 'layouts/boilerplate.html' %}
+
+{% block title %}New Listing{% endblock %}
+
+{% block content %}
+
+<style>
+  :root {
+    --bg-card: #0b0e1a;
+    --border-subtle: #232742;
+    --accent: #00ff90;
+    --accent-2: #ff2768;
+    --text-main: #ffffff;
+    --text-muted: #a4a8c3;
+  }
+
+  body {
+    color: var(--text-main);
+    background:
+      radial-gradient(circle at top, #171a33 0, #050711 55%) fixed,
+      #050711;
+  }
+
+  .create-box {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 28px 32px;
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 0 30px rgba(0,255,144,.08);
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Title Bar */
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+
+  .title-glow {
+    width: 24px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    animation: glowLine 2s infinite alternate;
+  }
+
+  @keyframes glowLine {
+    0% { box-shadow: 0 0 6px rgba(0,255,144,.3); }
+    100% { box-shadow: 0 0 16px rgba(0,255,144,.9); }
+  }
+
+  /* Input Styling */
+  .form-label {
+    color: var(--text-muted);
+  }
+
+  input.form-control,
+  textarea.form-control {
+    background: #090b14;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 10px 12px;
+    transition: .2s ease;
+  }
+
+  input.form-control:focus,
+  textarea.form-control:focus {
+    border-color: var(--accent);
+    background: #0f1323;
+    box-shadow: 0 0 12px rgba(0,255,144,.35);
+  }
+
+  /* Create Button */
+  .btn-success {
+    background: linear-gradient(90deg, var(--accent), #00b165);
+    border: none;
+    font-weight: 600;
+    color: black;
+    border-radius: 12px;
+    padding: 10px 24px;
+    transition: .2s ease;
+  }
+
+  .btn-success:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 18px rgba(0,255,144,.6);
+  }
+</style>
+
+
+<div class="create-box">
+
+  <h2>
+    <span class="title-glow"></span>
+    Create New Listing
+  </h2>
+
+  <form method="POST" class="mt-4" action="{{ url_for('listing.new') }}">
+
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input type="text" name="title" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" rows="4" class="form-control" required></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Image URL</label>
+      <input type="url" name="image_url" class="form-control" placeholder="https://...">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Price (optional)</label>
+      <input type="number" name="price" class="form-control" min="0">
+    </div>
+
+    <button class="btn btn-success">Create</button>
+
+  </form>
+
+</div>
+
+{% endblock %}

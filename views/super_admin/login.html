@@ -1,0 +1,14 @@
+{% extends 'layouts/boilerplate.html' %}
+{% block title %}Super Admin Login{% endblock %}
+
+{% block content %}
+<div class="col-md-4 mx-auto mt-5">
+  <h3 class="mb-3 text-center">Super Admin Login</h3>
+
+  <form method="POST">
+    <input class="form-control mb-2" name="username" placeholder="Username" required>
+    <input class="form-control mb-3" name="password" type="password" placeholder="Password" required>
+    <button class="btn btn-danger w-100">Login</button>
+  </form>
+</div>
+{% endblock %}

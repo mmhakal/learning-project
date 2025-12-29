@@ -1,0 +1,57 @@
+{% extends 'layouts/boilerplate.html' %}
+{% block title %}Super Admin Panel{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">🛡️ Super Admin Dashboard</h2>
+
+<!-- ADD ADMIN -->
+<div class="card mb-4">
+  <div class="card-body">
+    <h5>Add New Admin</h5>
+    <form method="POST" action="{{ url_for('super_admin.add_admin') }}" class="row g-2">
+      <div class="col-md-4">
+        <input class="form-control" name="username" placeholder="Admin Username" required>
+      </div>
+      <div class="col-md-4">
+        <input class="form-control" name="password" placeholder="Password" required>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-success w-100">Add Admin</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ADMINS -->
+<h5>Admins</h5>
+<ul class="list-group mb-4">
+  {% for admin in admins %}
+    <li class="list-group-item d-flex justify-content-between">
+      {{ admin.username }}
+      <form method="POST" action="{{ url_for('super_admin.delete_admin', id=admin.id) }}">
+        <button class="btn btn-sm btn-danger">Delete</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+
+<!-- USERS -->
+<h5>Users</h5>
+<ul class="list-group">
+  {% for user in users %}
+    <li class="list-group-item d-flex justify-content-between">
+      {{ user.username }} ({{ user.email }})
+      <form method="POST" action="{{ url_for('super_admin.delete_user', id=user.id) }}">
+        <button class="btn btn-sm btn-outline-danger">Delete</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+
+<a href="{{ url_for('super_admin.logout') }}"
+   class="btn btn-outline-danger mt-4">
+  Logout Super Admin
+</a>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'layouts/boilerplate.html' %}
+
+{% block title %}Edit {{ listing.title }}{% endblock %}
+
+{% block content %}
+
+<style>
+  :root {
+    --bg-card: #0b0e1a;
+    --border-subtle: #232742;
+    --accent: #00ff90;
+    --accent-2: #ff2768;
+    --text-main: #ffffff;
+    --text-muted: #a4a8c3;
+  }
+
+  body {
+    color: var(--text-main);
+    background:
+      radial-gradient(circle at top, #171a33 0, #050711 55%) fixed,
+      #050711;
+  }
+
+  .edit-box {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 26px 30px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,255,144,.08);
+    animation: fadeIn .6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+  }
+
+  .title-glow {
+    width: 24px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-2), var(--accent));
+    animation: glowLine 2s infinite alternate;
+  }
+
+  @keyframes glowLine {
+    0% { box-shadow: 0 0 6px rgba(0,255,144,.3); }
+    100% { box-shadow: 0 0 16px rgba(0,255,144,.9); }
+  }
+
+  .form-label {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  input.form-control,
+  textarea.form-control {
+    background: #090b14;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 10px 12px;
+    transition: .2s ease;
+  }
+
+  input.form-control:focus,
+  textarea.form-control:focus {
+    border-color: var(--accent);
+    background: #0f1323;
+    box-shadow: 0 0 12px rgba(0,255,144,.35);
+  }
+
+  .btn-primary {
+    background: linear-gradient(90deg, var(--accent), #00b165);
+    border: none;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 10px 26px;
+    transition: .2s ease;
+  }
+
+  .btn-primary:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 18px rgba(0,255,144,.6);
+  }
+
+  .btn-secondary {
+    background: #2c2f46;
+    border-radius: 12px;
+  }
+
+  .btn-secondary:hover {
+    background: #3a3d59;
+  }
+</style>
+
+
+<div class="edit-box">
+
+  <h2>
+    <span class="title-glow"></span>
+    Edit Listing
+  </h2>
+
+  <form method="POST"
+        action="{{ url_for('listing.edit', id=listing.id) }}"
+        class="mt-4">
+
+    <div class="mb-3">
+      <label class="form-label">Title</label>
+      <input type="text" name="title" class="form-control"
+             value="{{ listing.title }}" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Description</label>
+      <textarea name="description" rows="4" class="form-control" required>{{ listing.description }}</textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Image URL</label>
+      <input type="url" name="image_url" class="form-control"
+             value="{{ listing.image_url }}">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Price (optional)</label>
+      <input type="number" name="price" min="0" class="form-control"
+             value="{{ listing.price or '' }}">
+    </div>
+
+    <button class="btn btn-primary">Save Changes</button>
+
+    <a href="{{ url_for('listing.show', id=listing.id) }}"
+       class="btn btn-secondary ms-2">
+       Cancel
+    </a>
+
+  </form>
+
+</div>
+
+{% endblock %}

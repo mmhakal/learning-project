@@ -1,0 +1,37 @@
+.rating {
+  direction: rtl;
+  display: inline-flex;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 2rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+/* Hover effect */
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ff9800;
+  transform: scale(1.2);
+}
+
+/* Checked stars stay filled */
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+  color: #ff9800;
+}
+
+
+  textarea:focus, input.form-control:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(0,255,144,.3);
+    background: #4c62b7;
+  }

@@ -1,0 +1,21 @@
+{% extends 'layouts/boilerplate.html' %}
+
+{% block title %}Error · Wanderlust Flask{% endblock %}
+
+{% block content %}
+
+  <div class="text-center mt-5">
+
+    <h1 class="display-4">Error {{ status_code or 500 }}</h1>
+
+    <p class="lead">
+      {{ message or "Something went wrong" }}
+    </p>
+
+    <a href="{{ url_for('listing.index') }}" class="btn btn-primary mt-3">
+      Back to Listings
+    </a>
+
+  </div>
+
+{% endblock %}

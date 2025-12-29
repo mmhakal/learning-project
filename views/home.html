@@ -1,0 +1,297 @@
+{% extends 'layouts/boilerplate.html' %}
+
+{% block title %}Home · Wanderlust Flask{% endblock %}
+
+{% block content %}
+
+<style>
+  :root {
+    --bg-main: #050711;
+    --bg-card: #0b0e1a;
+    --bg-chip: #111628;
+    --accent: #00ff90;
+    --accent-soft: rgba(0, 255, 144, 0.12);
+    --accent-2: #ff2768;
+    --text-main: #ffffff;
+    --text-muted: #a4a8c3;
+    --border-subtle: #232742;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, sans-serif;
+    min-height: 100vh;
+    color: var(--text-main);
+    background:
+      radial-gradient(circle at top, #171a33 0, #050711 55%) fixed,
+      #050711;
+    overflow-x: hidden;
+  }
+
+  main.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 16px 64px;
+    position: relative;
+  }
+
+  /* GRID */
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 18px;
+  }
+
+  /* ----------- 3D CARD EFFECT ----------- */
+  .path-card {
+    background: var(--bg-card);
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid var(--border-subtle);
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform .35s ease, box-shadow .35s ease, border .35s ease;
+    overflow: hidden;
+  }
+
+  /* Glow Overlay */
+  .path-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at top left,
+      rgba(0,255,144,0.18),
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity .35s ease;
+    z-index: 0;
+  }
+
+  /* Hover Effect */
+  .path-card:hover {
+    transform: translateY(-8px) rotateX(6deg) rotateY(-6deg) scale(1.03);
+    border-color: rgba(0,255,144,0.7);
+    box-shadow: 0 28px 40px rgba(0,255,144,0.15),
+                0 12px 22px rgba(0,0,0,0.6);
+  }
+
+  .path-card:hover::before {
+    opacity: 1;
+  }
+
+  /* CONTENT */
+  .path-pill {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(0,255,144,0.12);
+    padding: 4px 7px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .path-pill-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 999px;
+  }
+
+  .path-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .path-desc {
+    font-size: .82rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.55;
+  }
+
+  .path-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: .75rem;
+    color: var(--text-muted);
+  }
+
+  .path-badge {
+    padding: 4px 7px;
+    border-radius: 999px;
+    font-size: 9.5px;
+    border: 1px solid rgba(79,91,164,0.7);
+  }
+
+  .path-progress {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .path-progress-bar {
+    width: 64px;
+    height: 5px;
+    background: #11131e;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .path-progress-fill {
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #00b165);
+    animation: pulse 2s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% { transform: scaleX(.8); opacity: .7; }
+    50% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(.85); opacity: .7; }
+  }
+
+  /* RESPONSIVE */
+  @media(max-width: 900px) {
+    .path-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media(max-width: 600px) {
+    .path-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style>
+
+
+<main class="page">
+
+  <section class="section">
+
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">
+          <span class="accent-bar"></span>
+          Learning paths
+        </h2>
+        <p class="section-subtitle">
+          Follow structured roadmaps that guide you from the basics of cyber security
+          to real offensive and defensive skills.
+        </p>
+      </div>
+    </div>
+
+    <div class="path-grid">
+
+      <!-- CARD 1 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Beginner</div>
+        <h3 class="path-name">Introduction to Cyber Security</h3>
+        <p class="path-desc">
+          Start with Linux, networking, web concepts and simple hacking tasks.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">12 rooms • 20+ hours</span>
+          <div class="path-progress">
+            <div class="path-progress-bar">
+              <div class="path-progress-fill"></div>
+            </div>
+            <span>40% complete</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Red Team</div>
+        <h3 class="path-name">Offensive Pentesting</h3>
+        <p class="path-desc">
+          Learn reconnaissance, exploitation, privilege escalation and more.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">18 rooms • 35+ hours</span>
+          <span>CTF-style challenges</span>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Blue Team</div>
+        <h3 class="path-name">SOC & Detection</h3>
+        <p class="path-desc">
+          Practice log analysis, threat hunting and incident response.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">10 rooms • 18+ hours</span>
+          <span>Defend & investigate</span>
+        </div>
+      </article>
+
+
+
+
+
+           <!-- CARD 4 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Beginner</div>
+        <h3 class="path-name">Introduction to Cyber Security</h3>
+        <p class="path-desc">
+          Start with Linux, networking, web concepts and simple hacking tasks.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">12 rooms • 20+ hours</span>
+          <div class="path-progress">
+            <div class="path-progress-bar">
+              <div class="path-progress-fill"></div>
+            </div>
+            <span>40% complete</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Red Team</div>
+        <h3 class="path-name">Offensive Pentesting</h3>
+        <p class="path-desc">
+          Learn reconnaissance, exploitation, privilege escalation and more.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">18 rooms • 35+ hours</span>
+          <span>CTF-style challenges</span>
+        </div>
+      </article>
+
+      <!-- CARD 6 -->
+      <article class="path-card">
+        <div class="path-pill"><span class="path-pill-dot"></span> Blue Team</div>
+        <h3 class="path-name">SOC & Detection</h3>
+        <p class="path-desc">
+          Practice log analysis, threat hunting and incident response.
+        </p>
+        <div class="path-meta">
+          <span class="path-badge">10 rooms • 18+ hours</span>
+          <span>Defend & investigate</span>
+        </div>
+      </article>
+    </div>
+
+  </section>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,188 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm fixed-top">
+  <div class="container">
+
+    <!-- BRAND -->
+    <a class="navbar-brand fw-bold" href="/">
+      <i class="fa-regular fa-compass me-1"></i> Hacky Hacks
+    </a>
+
+    <!-- TOGGLE -->
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- MENU -->
+    <div class="collapse navbar-collapse" id="mainNavbar">
+
+      <!-- LEFT -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link nav-dark-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link nav-dark-link" href="{{ url_for('listing.index') }}">
+            Listings
+          </a>
+        </li>
+      </ul>
+
+      <!-- 🔍 SEARCH (CENTER) -->
+      <form class="d-flex mx-auto search-form"
+            method="GET"
+            action="{{ url_for('listing.index') }}">
+        <input class="form-control search-input"
+               type="search"
+               name="q"
+               placeholder="Search listings..."
+               value="{{ request.args.get('q','') }}">
+        <button class="btn search-btn ms-2">Search</button>
+      </form>
+
+      <!-- RIGHT -->
+      <ul class="navbar-nav ms-auto">
+
+        {# ================= SUPER ADMIN ================= #}
+        {% if session.get('super_admin_id') %}
+
+          <li class="nav-item">
+            <a class="nav-link text-warning fw-bold"
+               href="{{ url_for('super_admin.dashboard') }}">
+              Super Admin Panel
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold"
+               href="{{ url_for('super_admin.logout') }}">
+              Logout (Super)
+            </a>
+          </li>
+
+        {# ================= ADMIN ================= #}
+        {% elif session.get('admin_id') %}
+
+          <li class="nav-item">
+            <a class="nav-link nav-dark-link"
+               href="{{ url_for('admin.dashboard') }}">
+              Admin Dashboard
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold"
+               href="{{ url_for('admin.logout') }}">
+              Logout (Admin)
+            </a>
+          </li>
+
+        {# ================= USER ================= #}
+        {% elif current_user.is_authenticated %}
+
+          <li class="nav-item">
+            <span class="nav-link disabled text-info">
+              Hi, {{ current_user.username }}
+            </span>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-dark-link"
+               href="{{ url_for('user.logout') }}">
+              Logout
+            </a>
+          </li>
+
+        {# ================= GUEST ================= #}
+        {% else %}
+
+          <li class="nav-item">
+            <a class="nav-link nav-dark-link"
+               href="{{ url_for('user.login') }}">
+              Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link nav-dark-link"
+               href="{{ url_for('user.signup') }}">
+              Signup
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-warning fw-bold"
+               href="{{ url_for('admin.login') }}">
+              Admin
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-bold"
+               href="{{ url_for('super_admin.login') }}">
+              Super Admin
+            </a>
+          </li>
+
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= CSS ================= -->
+<style>
+  body {
+    padding-top: 72px;
+  }
+
+  .navbar-dark {
+    background: #121212 !important;
+    z-index: 1030;
+  }
+
+  .nav-dark-link {
+    color: #c9d1d9 !important;
+    transition: 0.2s;
+  }
+
+  .nav-dark-link:hover {
+    color: #58a6ff !important;
+    text-shadow: 0 0 8px rgba(88,166,255,0.6);
+  }
+
+  .navbar-brand {
+    color: #58a6ff !important;
+  }
+
+  /* SEARCH */
+  .search-form {
+    width: 40%;
+    min-width: 260px;
+  }
+
+  .search-input {
+    background: #0d1117;
+    color: #fff;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+  }
+
+  .search-input:focus {
+    border-color: #00ff90;
+    box-shadow: 0 0 10px rgba(0,255,144,0.4);
+  }
+
+  .search-btn {
+    background: linear-gradient(90deg, #00ff90, #00c56b);
+    border-radius: 8px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 992px) {
+    .search-form {
+      display: none;
+    }
+  }
+</style>
